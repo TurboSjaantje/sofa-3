@@ -9,12 +9,19 @@
 
         public bool IsPremiumticket()
         {
-            throw new NotImplementedException();
+            return _isPremium;
         }
 
-        public double GetPrice()
+        public double GetPrice() => _movieScreening.getPricePerSeat();
+
+        public MovieScreening GetMovieScreening() => _movieScreening;
+
+        public bool IsNonStudentDiscountDay()
         {
-            throw new NotImplementedException();
+            var dayOfWeek = _movieScreening.GetDateAndTime().DayOfWeek;
+
+            if (dayOfWeek >= DayOfWeek.Friday && dayOfWeek <= DayOfWeek.Sunday) return false;
+            return true;
         }
 
         public override string ToString()
