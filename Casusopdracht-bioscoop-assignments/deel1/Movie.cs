@@ -2,17 +2,10 @@
 {
     public class Movie(string title)
     {
-
         public string Title { get; private set; } = title;
-        public List<MovieScreening> MovieScreenings { get; private set; } = [];
-
+        public List<MovieScreening> MovieScreenings { get; init;  } = [];
         public void AddScreening(MovieScreening movieScreening) => MovieScreenings.Add(movieScreening);
 
-        public string ToString()
-        {
-            StringBuilder sb = new(Title);
-            MovieScreenings.ForEach(m => sb.Append(m.ToString()));
-            return sb.ToString();
-        }
+        public override string ToString() => string.Join("\n", MovieScreenings.Select(x => x.ToString()));
     }
 }

@@ -4,9 +4,9 @@ namespace deel1
 {
     public class Order(int orderNr, bool isStudentOrder)
     {
-        public int OrderNr { get; } = orderNr;
-        public bool IsStudentOrder { get; } = isStudentOrder;
-        public List<MovieTicket> MovieTickets { get; } = [];
+        public int OrderNr { get; private set;} = orderNr;
+        public bool IsStudentOrder { get; private set; } = isStudentOrder;
+        public List<MovieTicket> MovieTickets { get; init; } = [];
 
         public void AddSeatReservation(MovieTicket ticket)
         {
@@ -81,7 +81,7 @@ namespace deel1
             return ticketList.Where(t => t.Value == true).Sum(t => t.Key.GetPrice());
         }
 
-        public void ExportJson(TicketExportFormat exportFormat)
+        public void Export(TicketExportFormat exportFormat)
         {
             string outputFolder = "file-write-outputs";
 

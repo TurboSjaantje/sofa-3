@@ -18,8 +18,8 @@ order2.AddSeatReservation(movieTicket2);
 order2.AddSeatReservation(movieTicket3);
 order2.AddSeatReservation(movieTicket4);
 
-order1.ExportJson(TicketExportFormat.JSON); 
-order2.ExportJson(TicketExportFormat.JSON);
+order1.Export(TicketExportFormat.JSON); 
+order2.Export(TicketExportFormat.JSON);
 
 Console.WriteLine($"Order 1 {order1.CalculatePrice().ToString("F2")}");
 Console.WriteLine($"Order 2 {order2.CalculatePrice().ToString("F2")}");
