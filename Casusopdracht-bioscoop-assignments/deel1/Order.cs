@@ -15,22 +15,22 @@ namespace deel1
 
         public double CalculatePrice()
         {
-            //Create ticketlist
-            var ticketList = new Dictionary<MovieTicket, bool>();
+            Dictionary<MovieTicket, bool> ticketList;
 
             //Bussiness rule: Add potential for free tickets
             if (IsStudentOrder) ticketList = GetTicketListStudent();
             else ticketList = GetTicketListNonStudent();
 
             //Bussiness rule: Get the base price for tickets that have to be paid
-            var price = GetBasePrice(ticketList);
+            double price = (double) GetBasePrice(ticketList);
 
             //Bussiness rule: Apply premium for tickets with better seats
-            price += GetPremium(ticketList);
+            price += (double) GetPremium(ticketList);
 
             // Bussiness rule: Add discount for non-student order of >= than 6 tickets
-            if (MovieTickets.Count >= 6 && !IsStudentOrder) price *= 0.90;
+            if (MovieTickets.Count >= 6 && !IsStudentOrder) price *= (double) 0.90;
 
+        
             return price;
         }
 
@@ -66,18 +66,13 @@ namespace deel1
             return ticketHasToBePaid;
         }
 
-        public double GetPremium(Dictionary<MovieTicket, bool> ticketList)
+        public decimal GetPremium(Dictionary<MovieTicket, bool> ticketList)
         {
-            if (IsStudentOrder)
-            {
-                // Add premium for better seat for the tickets that have to be paid
-                return 2 * ticketList.Where(t => t.Value == true && t.Key.IsPremium).Count();
-            }
-            else
-            {
-                // Add premium for better seat for the tickets that have to be paid
-                return 3 * ticketList.Where(t => t.Value == true && t.Key.IsPremium).Count();
-            }
+            var premium = IsStudentOrder ? 2.0 : 3.0;
+
+            // Add premium for better seat for the tickets that have to be paid
+            var result = (decimal) (premium *  ticketList.Where(t => t.Value == true && t.Key.IsPremium).Count());
+            return result;
         }
 
         public static double GetBasePrice(Dictionary<MovieTicket, bool> ticketList)
@@ -103,7 +98,7 @@ namespace deel1
 
         private void WriteToFile(string filePath)
         {
-            string jsonData = JsonSerializer.Serialize(this, new JsonSerializerOptions(){ WriteIndented = true });
+            string jsonData = JsonSerializer.Serialize(this, new JsonSerializerOptions() { WriteIndented = true });
             File.WriteAllText(filePath, jsonData);
         }
     }

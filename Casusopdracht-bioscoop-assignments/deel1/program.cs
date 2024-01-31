@@ -1,8 +1,27 @@
 ﻿using deel1;
 
-var movieTicket = new MovieTicket(1, 1, true, new MovieScreening(DateTime.Now, 10, new Movie("test")));
-var order = new Order(1, true);
+var movieTicket1 = new MovieTicket(1, 1, true, new MovieScreening(DateTime.Now, 10, new Movie("test")));
+var movieTicket2 = new MovieTicket(1, 1, true, new MovieScreening(DateTime.Now.AddDays(3), 10, new Movie("test")));
+var movieTicket3 = new MovieTicket(1, 1, true, new MovieScreening(DateTime.Now, 10, new Movie("test")));
+var movieTicket4 = new MovieTicket(1, 1, false, new MovieScreening(DateTime.Now, 10, new Movie("test")));
 
-order.AddSeatReservation(movieTicket);
+var order1 = new Order(1, true);
+var order2 = new Order(2, false);
 
-order.ExportJson(TicketExportFormat.JSON); 
+order1.AddSeatReservation(movieTicket1);
+order1.AddSeatReservation(movieTicket2);
+order1.AddSeatReservation(movieTicket3);
+order1.AddSeatReservation(movieTicket4);
+
+order2.AddSeatReservation(movieTicket1);
+order2.AddSeatReservation(movieTicket2);
+order2.AddSeatReservation(movieTicket3);
+order2.AddSeatReservation(movieTicket4);
+
+order1.ExportJson(TicketExportFormat.JSON); 
+order2.ExportJson(TicketExportFormat.JSON);
+
+Console.WriteLine($"Order 1 {order1.CalculatePrice().ToString("F2")}");
+Console.WriteLine($"Order 2 {order2.CalculatePrice().ToString("F2")}");
+
+
