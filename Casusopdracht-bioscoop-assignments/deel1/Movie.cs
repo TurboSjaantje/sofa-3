@@ -3,8 +3,8 @@
     public class Movie(string title)
     {
 
-        private readonly string Title = title;
-        private readonly List<MovieScreening> MovieScreenings = [];
+        public string Title { get; private set; } = title;
+        public List<MovieScreening> MovieScreenings { get; private set; } = [];
 
         public void AddScreening(MovieScreening movieScreening) => MovieScreenings.Add(movieScreening);
 

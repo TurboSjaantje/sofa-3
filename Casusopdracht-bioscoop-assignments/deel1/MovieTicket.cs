@@ -2,15 +2,10 @@
 {
     public class MovieTicket(int rowNr, int seatNr, bool isPremium, MovieScreening movieScreening)
     {
-        private int RowNr = rowNr;
-        private readonly int SeatNr = seatNr;
-        private readonly bool IsPremium = isPremium;
-        private readonly MovieScreening MovieScreening = movieScreening; 
-
-        public bool IsPremiumticket()
-        {
-            return IsPremium;
-        }
+        public int RowNr { get; private set; } = rowNr;
+        public int SeatNr { get; private set; } = seatNr;
+        public bool IsPremium { get; private set; } = isPremium;
+        public MovieScreening MovieScreening { get; private set; } = movieScreening; 
 
         public double GetPrice() => MovieScreening.PricePerSeat;
 
@@ -26,7 +21,7 @@
 
         public override string ToString()
         {
-            return "";
+            return "kojo;;";
         }
     }
 }

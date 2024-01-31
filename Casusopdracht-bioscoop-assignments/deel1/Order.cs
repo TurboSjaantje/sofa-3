@@ -1,20 +1,16 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text.Json;
-using System.Xml;
+﻿using System.Text.Json;
 
 namespace deel1
 {
     public class Order(int orderNr, bool isStudentOrder)
     {
         public int OrderNr { get; } = orderNr;
-        private readonly bool IsStudentOrder = isStudentOrder;
-        private List<MovieTicket> MovieTickets = [];
+        public bool IsStudentOrder { get; } = isStudentOrder;
+        public List<MovieTicket> MovieTickets { get; } = [];
 
         public void AddSeatReservation(MovieTicket ticket)
         {
-            throw new NotImplementedException();
+            MovieTickets.Add(ticket);
         }
 
         public double CalculatePrice()
@@ -75,12 +71,12 @@ namespace deel1
             if (IsStudentOrder)
             {
                 // Add premium for better seat for the tickets that have to be paid
-                return 2 * ticketList.Where(t => t.Value == true && t.Key.IsPremiumticket()).Count();
+                return 2 * ticketList.Where(t => t.Value == true && t.Key.IsPremium).Count();
             }
             else
             {
                 // Add premium for better seat for the tickets that have to be paid
-                return 3 * ticketList.Where(t => t.Value == true && t.Key.IsPremiumticket()).Count();
+                return 3 * ticketList.Where(t => t.Value == true && t.Key.IsPremium).Count();
             }
         }
 
@@ -98,16 +94,16 @@ namespace deel1
             {
                 Directory.CreateDirectory(outputFolder);
             }
-                    
-            string fileName = $"output_{DateTime.Now:yyyyMMdd}";
+
+            string fileName = $"output_{DateTime.Now:yyyyMMddhhmmss}";
             string filePath = Path.Combine(outputFolder, $"{fileName}.{(exportFormat == TicketExportFormat.JSON ? "json" : "txt")}");
 
-            WriteToFile(filePath);            
+            WriteToFile(filePath);
         }
 
         private void WriteToFile(string filePath)
         {
-            string jsonData = JsonSerializer.Serialize(this);
+            string jsonData = JsonSerializer.Serialize(this, new JsonSerializerOptions(){ WriteIndented = true });
             File.WriteAllText(filePath, jsonData);
         }
     }
