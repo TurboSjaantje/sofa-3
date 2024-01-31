@@ -3,18 +3,15 @@
     public class Movie(string title)
     {
 
-        private readonly string _title = title;
-        private readonly List<MovieScreening> _movieScreenings = [];
+        private readonly string Title = title;
+        private readonly List<MovieScreening> MovieScreenings = [];
 
-        public void AddScreening(MovieScreening movieScreening)
-        {
-            _movieScreenings.Add(movieScreening);
-        }
+        public void AddScreening(MovieScreening movieScreening) => MovieScreenings.Add(movieScreening);
 
         public string ToString()
         {
-            StringBuilder sb = new(_title);
-            _movieScreenings.ForEach(m => sb.Append(m.ToString()));
+            StringBuilder sb = new(Title);
+            MovieScreenings.ForEach(m => sb.Append(m.ToString()));
             return sb.ToString();
         }
     }
