@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text.Json;
+using System.Xml;
 
 namespace deel1
 {
@@ -69,14 +71,23 @@ namespace deel1
 
         public void ExportJson(TicketExportFormat exportFormat)
         {
-            if (exportFormat == TicketFormat.JSON)
-            {
-                FileWrit
-            }
-            else
-            {
+            string outputFolder = "file-write-outputs";
 
+            if (!Directory.Exists(outputFolder))
+            {
+                Directory.CreateDirectory(outputFolder);
             }
+                    
+            string fileName = $"output_{DateTime.Now:yyyyMMdd}";
+            string filePath = Path.Combine(outputFolder, $"{fileName}.{(exportFormat == TicketExportFormat.JSON ? "json" : "txt")}");
+
+            WriteToFile(filePath);            
+        }
+
+        private void WriteToFile(string filePath)
+        {
+            string jsonData = JsonSerializer.Serialize(this);
+            File.WriteAllText(filePath, jsonData);
         }
 
         public int GetOrderNr { get { return _orderNr; } }
