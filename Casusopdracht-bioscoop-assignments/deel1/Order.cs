@@ -4,7 +4,7 @@ namespace deel1
 {
     public class Order(int orderNr, bool isStudentOrder)
     {
-        public int OrderNr { get; private set;} = orderNr;
+        public int OrderNr { get; private set; } = orderNr;
         public bool IsStudentOrder { get; private set; } = isStudentOrder;
         public List<MovieTicket> MovieTickets { get; init; } = [];
 
@@ -22,15 +22,15 @@ namespace deel1
             else ticketList = GetTicketListNonStudent();
 
             //Bussiness rule: Get the base price for tickets that have to be paid
-            double price = (double) GetBasePrice(ticketList);
+            double price = (double)GetBasePrice(ticketList);
 
             //Bussiness rule: Apply premium for tickets with better seats
-            price += (double) GetPremium(ticketList);
+            price += (double)GetPremium(ticketList);
 
             // Bussiness rule: Add discount for non-student order of >= than 6 tickets
-            if (MovieTickets.Count >= 6 && !IsStudentOrder) price *= (double) 0.90;
+            if (MovieTickets.Count >= 6 && !IsStudentOrder) price *= (double)0.90;
 
-        
+
             return price;
         }
 
@@ -41,12 +41,9 @@ namespace deel1
             movieTickets.Reverse();
 
             // Create list with free second ticket for students
-            var hasToBePaid = false;
-            foreach (var ticket in MovieTickets)
+            for (int i = 0; i < MovieTickets.Count; i++)
             {
-                if (hasToBePaid) ticketHasToBePaid.Add(ticket, true);
-                else ticketHasToBePaid.Add(ticket, false);
-                hasToBePaid = !hasToBePaid;
+                ticketHasToBePaid.Add(MovieTickets[i], i % 2 != 0);
             }
 
             return ticketHasToBePaid;
@@ -59,13 +56,24 @@ namespace deel1
             movieTickets.Reverse();
 
             //Create list with free second ticket for non student
-            var hasToBePaid = false;
-            foreach (var ticket in movieTickets)
+            for (int i = 0; i < MovieTickets.Count; i++)
             {
-                if (hasToBePaid) ticketHasToBePaid.Add(ticket, true);
-                else if (!hasToBePaid && ticket.IsNonStudentDiscountDay()) ticketHasToBePaid.Add(ticket, false);
-                else ticketHasToBePaid.Add(ticket, true);
-                hasToBePaid = !hasToBePaid;
+                var dayOfWeek = MovieTickets[i].MovieScreening.DateAndTime.DayOfWeek;
+                if (i % 2 == 0)
+                {
+                    if (dayOfWeek >= DayOfWeek.Monday && dayOfWeek <= DayOfWeek.Thursday)
+                    {
+                        ticketHasToBePaid.Add(movieTickets[i], false);
+                    }
+                    else
+                    {
+                        ticketHasToBePaid.Add(movieTickets[i], true);
+                    }
+                }
+                else
+                {
+                    ticketHasToBePaid.Add(movieTickets[i], true);
+                }
             }
 
             return ticketHasToBePaid;
@@ -76,7 +84,7 @@ namespace deel1
             var premium = IsStudentOrder ? 2.0 : 3.0;
 
             // Add premium for better seat for the tickets that have to be paid
-            var result = (decimal) (premium *  ticketList.Where(t => t.Value == true && t.Key.IsPremium).Count());
+            var result = (decimal)(premium * ticketList.Where(t => t.Value == true && t.Key.IsPremium).Count());
             return result;
         }
 

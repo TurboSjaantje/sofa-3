@@ -5,7 +5,7 @@
         public int RowNr { get; private set; } = rowNr;
         public int SeatNr { get; private set; } = seatNr;
         public bool IsPremium { get; private set; } = isPremiumReservation;
-        public MovieScreening MovieScreening { get; private set; } = movieScreening; 
+        public MovieScreening MovieScreening { get; private set; } = movieScreening;
 
         public double GetPrice() => MovieScreening.PricePerSeat;
 
@@ -15,7 +15,12 @@
         {
             var dayOfWeek = MovieScreening.DateAndTime.DayOfWeek;
 
-            if (dayOfWeek >= DayOfWeek.Friday && dayOfWeek <= DayOfWeek.Sunday) return false;
+            if (dayOfWeek == DayOfWeek.Monday || dayOfWeek == DayOfWeek.Tuesday 
+                || dayOfWeek == DayOfWeek.Wednesday || dayOfWeek == DayOfWeek.Thursday)
+            {
+                return true;
+            }
+
             return true;
         }
 
