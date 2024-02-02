@@ -1,7 +1,7 @@
 ﻿using deel1;
 
-var movieTicket1 = new MovieTicket(1, 1, true, new MovieScreening(DateTime.Now, 10, new Movie("test")));
-var movieTicket2 = new MovieTicket(1, 1, true, new MovieScreening(DateTime.Now.AddDays(3), 10, new Movie("test")));
+var movieTicket1 = new MovieTicket(1, 1, false, new MovieScreening(DateTime.Now, 10, new Movie("test")));
+var movieTicket2 = new MovieTicket(1, 1, true, new MovieScreening(DateTime.Now.AddDays(-2), 10, new Movie("test")));
 var movieTicket3 = new MovieTicket(1, 1, true, new MovieScreening(DateTime.Now, 10, new Movie("test")));
 var movieTicket4 = new MovieTicket(1, 1, false, new MovieScreening(DateTime.Now, 10, new Movie("test")));
 
@@ -10,8 +10,8 @@ var order2 = new Order(2, false);
 
 order1.AddSeatReservation(movieTicket1);
 order1.AddSeatReservation(movieTicket2);
-order1.AddSeatReservation(movieTicket3);
-order1.AddSeatReservation(movieTicket4);
+//order1.AddSeatReservation(movieTicket3);
+//order1.AddSeatReservation(movieTicket4);
 
 order2.AddSeatReservation(movieTicket1);
 order2.AddSeatReservation(movieTicket2);

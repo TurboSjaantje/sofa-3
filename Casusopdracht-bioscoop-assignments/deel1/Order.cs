@@ -37,6 +37,8 @@ namespace deel1
         public Dictionary<MovieTicket, bool> GetTicketListStudent()
         {
             Dictionary<MovieTicket, bool> ticketHasToBePaid = [];
+            List<MovieTicket> movieTickets = MovieTickets;
+            movieTickets.Reverse();
 
             // Create list with free second ticket for students
             var hasToBePaid = false;
@@ -53,9 +55,12 @@ namespace deel1
         public Dictionary<MovieTicket, bool> GetTicketListNonStudent()
         {
             Dictionary<MovieTicket, bool> ticketHasToBePaid = [];
+            List<MovieTicket> movieTickets = MovieTickets;
+            movieTickets.Reverse();
 
+            //Create list with free second ticket for non student
             var hasToBePaid = false;
-            foreach (var ticket in MovieTickets)
+            foreach (var ticket in movieTickets)
             {
                 if (hasToBePaid) ticketHasToBePaid.Add(ticket, true);
                 else if (!hasToBePaid && ticket.IsNonStudentDiscountDay()) ticketHasToBePaid.Add(ticket, false);
